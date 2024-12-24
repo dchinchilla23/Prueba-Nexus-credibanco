@@ -1,0 +1,27 @@
+-- database: ./db.sqlite3
+
+-- Use the ▷ button in the top right corner to run the entire file.
+
+CREATE TABLE Venta (
+    idFactura INTEGER PRIMARY KEY,
+    idAlmacen INTEGER NOT NULL,
+    fecha DATETIME NOT NULL,  -- Usando DATETIME para almacenar fecha y hora,,,,
+    idCliente INTEGER NOT NULL,
+    Cantidad INTEGER NOT NULL,
+    valorUnitario BIGINT NOT NULL
+);
+
+
+CREATE TABLE Almacen (
+    idAlmacen INTEGER PRIMARY KEY,
+    nombreAlmacen VARCHAR(255) NOT NULL,
+    sucursal VARCHAR(255),
+    direccion VARCHAR(255)
+);
+
+CREATE TABLE Cliente (
+    idCliente INTEGER PRIMARY KEY,
+    nombreCliente VARCHAR(255) NOT NULL,
+    direccion VARCHAR(255),
+    ciudad VARCHAR(255)
+);

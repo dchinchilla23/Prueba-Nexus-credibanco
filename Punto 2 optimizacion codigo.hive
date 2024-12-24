@@ -1,0 +1,24 @@
+CREATE TABLE cld_bi_operacion_eng.microservicios_gestor_de_terminales AS
+SELECT 
+    terminal,  
+    codigo_unico,  
+    version_contenedor,  
+    date_monitoring,  
+    fecha_carga,  
+    '' AS serie
+FROM (
+    SELECT 
+        terminal, 
+        codigo_unico, 
+        version_contenedor, 
+        date_monitoring, 
+        fecha_carga,
+        ROW_NUMBER() OVER (
+            PARTITION BY terminal, codigo_unico 
+            ORDER BY date_monitoring DESC
+        ) AS ranker
+    FROM cld_bi_operacion_eng.microservicios_versiones_t
+    WHERE 
+        date_monitoring >= (SELECT fecha_inicio FROM cld_bi_operacion_eng.fecha_inicio_2_prueba) -- Filtro de fecha
+) ranked_data
+WHERE ranker = 1;
